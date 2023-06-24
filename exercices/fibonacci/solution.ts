@@ -12,13 +12,13 @@
 //   return fibonacci(n - 1) + fibonacci(n - 2);
 // });
 
-const fibonacci = async (n: number): Promise<number> => {
+const fibonacci = memoize(async (n: number): Promise<number> => {
   if (n <= 2) return 1;
   const [prev1, prev2] = await Promise.all([fibonacci(n - 1), fibonacci(n - 2)]);
   return new Promise((resolve) => {
     setTimeout(() => resolve(prev1 + prev2));
   });
-};
+});
 
 function memoize<Input, Result>(fn: (input: Input) => Result) {
   const memoMap = new Map<Input, Result>();
